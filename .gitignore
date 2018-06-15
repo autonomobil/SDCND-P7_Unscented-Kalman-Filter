@@ -4,3 +4,4 @@ build
 *.db
 my_src
 .ipynb_checkpoints
+*ipynb_checkpoints
