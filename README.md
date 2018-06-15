@@ -1,17 +1,19 @@
 [//]: # (Image References)
 
 [img1]: ./images/finished.png "finished.png"
-[img2]: ./images/finished_dataset2.png "dataset2.png"
+[img2]: ./images/Meas_vs_Kalmanfilt.png "measvskalman.png"
+[img3]: ./images/NIS_process_noise_bad.png "finished.png"
+[img4]: ./images/NIS_process_noise_good.png "finished.png"
 
 ---
-# SDCND Term 2 Project 6: Extended Kalman Filter
+# SDCND Term 2 Project 7: Unscented Kalman Filter
 ## Project for Udacity Self-Driving Car Engineer Nanodegree Program
 
-In this project we will utilize a kalman filter to estimate the state of a moving object of interest with noisy lidar and radar measurements.
+In this project we will utilize a unscented kalman filter to estimate the state of a moving object of interest with noisy lidar and radar measurements. It's similiar to the project ["Extended Kalman Filter"](https://github.com/autonomobil/SDCND-P6_Extended-Kalman-Filter)
 
-This project includes  the implementation of an Extended Kalman filter with C++. A Udacity-provided simulator (available for download [here](https://github.com/udacity/self-driving-car-sim/releases) generates noisy RADAR and LIDAR measurements of an object's position and speed, and the Extended Kalman Filter [EKF] must merge these measurements to predict the object's position. Communication between the simulator and the EKF takes place via [uWebSocket](https://github.com/uNetworking/uWebSockets).
+This project includes  the implementation of an Unscented Kalman filter with C++. A Udacity-provided simulator (available for download [here](https://github.com/udacity/self-driving-car-sim/releases) generates noisy RADAR and LIDAR measurements of an object's position and speed, and the Unscented Kalman Filter [UKF] must merge these measurements to predict the object's position. Communication between the simulator and the EKF takes place via [uWebSocket](https://github.com/uNetworking/uWebSockets).
 
-Udacity's project basis can be found [here](https://github.com/udacity/CarND-Extended-Kalman-Filter-Project).
+Udacity's project basis can be found [here](https://github.com/udacity/CarND-Unscented-Kalman-Filter-Project).
 
 
 ![img1]
@@ -23,37 +25,44 @@ Udacity's project basis can be found [here](https://github.com/udacity/CarND-Ext
 * gcc/g++ >= 5.4
 * Udacity's simulator
 
-For instructions on how to install these components on different operating systems, visit [Udacity's project](https://github.com/udacity/CarND-Extended-Kalman-Filter-Project).
+For instructions on how to install these components on different operating systems, visit [Udacity's project](https://github.com/udacity/CarND-Unscented-Kalman-Filter-Project).
 
 
 ## Setup and Running
-Follow these suggested steps for Windows setup:
+These are the suggested steps for Windows setup:
 
 * Follow these the [instructions](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/) for setting up Ubuntu BASH.
 * Download Windows simulator [here](https://github.com/udacity/self-driving-car-sim/releases).
-* Open Ubuntu Bash (write all following commands to Ubuntu Bash command window)
+* Open Ubuntu Bash (write following commands to Ubuntu Bash command window)
 * ``sudo apt-get update``
 * ``sudo apt-get install git``
 * ``sudo apt-get install cmake``
 * ``sudo apt-get install openssl``
 * ``sudo apt-get install libssl-dev``
 * navigate to where you want to clone this repository to, for example:
- ``cd /mnt/c/Users/"Bob"``
-* ``git clone https://github.com/autonomobil/SDCND-P6_Extended-Kalman-Filter``
+ ``cd /mnt/c/Users/Bob``
+* ``git clone https://github.com/autonomobil/SDCND-P7_Unscented-Kalman-Filter``
 * ``sudo rm /usr/lib/libuWS.so``
-* navigate to project folder: ``cd ./SCDND-P6_ExtendedKalmanFilter``
+* navigate to project folder: ``cd ./SDCND-P7_Unscented-Kalman-Filter``
 * ``./install-ubuntu.sh``
 * ``mkdir build && cd build``
 * ``cmake .. && make``
 * Launch the **term2_sim.exe** from Windows simulator folder
-* Execute ``./ExtendedKF``
+* Execute ``./UnscentedKF``
 * If you see ``Listening to port 4567 Connected!!!``, it is working
 * Press **Start**
 
-These files were modified compared to the [original repository](https://github.com/udacity/CarND-Extended-Kalman-Filter-Project):  
-* src/FusionEKF.cpp
-* src/kalman_filter.cpp
+These files were modified compared to the [original repository](https://github.com/udacity/CarND-Unscented-Kalman-Filter-Project):  
+* src/ukf.cpp
+* src/ukf.h
 * src/tools.cpp
+
+There is also a [python routine](./UKF_Visualizer.ipynb) implemented to show measured and predicted points, as well as NIST values to tune the process noise ``std_a`` and ``std_yawdd``. These were tuned to ``std_a = 1.75`` and ``std_yawdd = 0.6``.
+
+**Not so good NIST values:**
+![img3]
+**Better NIST values:**
+![img4]
 
 ---
 

@@ -25,10 +25,10 @@ UKF::UKF() {
   P_ = MatrixXd(5, 5);
 
   // Process noise standard deviation longitudinal acceleration in m/s^2
-  std_a_ = 1.5;
+  std_a_ = 1;
 
   // Process noise standard deviation psi acceleration in rad/s^2
-  std_yawdd_ = 0.8;
+  std_yawdd_ = 0.3;
 
   //DO NOT MODIFY measurement noise values below these are provided by the sensor manufacturer.
   // Laser measurement noise standard deviation position1 in m
@@ -81,8 +81,6 @@ UKF::UKF() {
   NIS_radar_ = 0.0;
   NIS_laser_ = 0.0;
 
-
-  // out_data;
   // set to true in first call of ProcessMeasurement
   is_initialized_ = false;
 
@@ -103,40 +101,42 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     // first measurement
     cout << "Initialize UKF " << endl;
 
+    ofstream out_data;
+    out_data.open ("data_out.txt");
+
     x_.fill(0.0);
-    x_(2) = 5.556;      // bike is around  20km/h / 3,6 -> 5.556m/s
 
-    P_.fill(0.0);
-
-    // P_.setIdentity(5, 5); // as discussed in Lesson 7, 32. What to Except from the Project, Initializing the State Covariance Matrix P_
+    P_.setIdentity(5, 5); // as discussed in Lesson 7, 32. What to Except from the Project, Initializing the State Covariance Matrix P_
 
     if (meas_package.sensor_type_ == MeasurementPackage::RADAR) {
+      cout << "First measurement: Radar" << endl;
        // Convert from polar to cartesian coordinates
       float rho     = meas_package.raw_measurements_[0];
       float phi     = meas_package.raw_measurements_[1];
-      // float rho_dot = meas_package.raw_measurements_[2];
+      float rho_dot = meas_package.raw_measurements_[2];
 
       float px = rho * cos(phi);
       float py = rho * sin(phi);
-      // float vx = rho_dot * cos(phi);
-      // float vy = rho_dot * sin(phi);
-      // float v  = sqrt(vx * vx + vy * vy);
+      float vx = rho_dot * cos(phi);
+      float vy = rho_dot * sin(phi);
+      float v  = sqrt(vx * vx + vy * vy);
 
       // initialize state
       x_(0) = px;
       x_(1) = py;
+      x_(3) = v;
     }
 
     else if (meas_package.sensor_type_ == MeasurementPackage::LASER) {
-
+      cout << "First measurement: Lidar" << endl;
       // initialize state
       x_(0) = meas_package.raw_measurements_[0];
       x_(1) = meas_package.raw_measurements_[1];
 
-      // if (fabs(x_(0)) < 0.0001 and fabs(x_(1)) <  0.0001){
-      //       x_(0) =  0.0001;
-      //       x_(1) =  0.0001;
-      // }
+      if (fabs(x_(0)) < 0.0001 and fabs(x_(1)) <  0.0001){
+            x_(0) =  0.0001;
+            x_(1) =  0.0001;
+      }
     }
 
     // initial timestamp for dt calculation
@@ -171,6 +171,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     float phi = meas_package.raw_measurements_(1);
     out_data << rho * cos(phi) << ';';    //px - meas
     out_data << rho * sin(phi) << ';';    //py - meas
+    cout << endl << "--------- Radar ---------" << endl;
   }
 
   else if(meas_package.sensor_type_ == MeasurementPackage::LASER && use_laser_ ) {
@@ -178,20 +179,18 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     UpdateLidar(meas_package);
     out_data << meas_package.raw_measurements_(0) << ';';    //px - meas
     out_data << meas_package.raw_measurements_(1) << ';';    //py - meas
+    cout << endl << "--------- Lidar ---------" <<endl;
   }
 
   // print the output
-  cout << "x_ = " << x_ << "----" << endl;
-  cout << "P_ = " << P_ << "----" << endl;
-
+  cout << "x_ = " << x_ << endl;
+  cout << "P_ = " << P_ << endl;
 
   out_data << NIS_radar_ << ';';
   out_data << NIS_laser_ << ';';
   out_data << x_(0) << ';';
   out_data << x_(1) << endl;
 
-  // out_data << NIS_laser_ << '\t' << endl;
-  //myfile.close();
 
 }
 
@@ -380,11 +379,8 @@ void UKF::Update_x_P(VectorXd z, MatrixXd Zsig, int n_z){
     //residual
     VectorXd z_diff = Zsig.col(i) - z_pred;
 
-    if (n_z == 3){ // Radar
-      //angle normalization
-      while (z_diff(1)>  M_PI)      z_diff(1) = z_diff(1) - 2.*M_PI;
-      while (z_diff(1)< -M_PI)      z_diff(1) = z_diff(1) + 2.*M_PI;
-    }
+    while (z_diff(1)>  M_PI)      z_diff(1) = z_diff(1) - 2.*M_PI;
+    while (z_diff(1)< -M_PI)      z_diff(1) = z_diff(1) + 2.*M_PI;
 
     S = S + weights_(i) * z_diff * z_diff.transpose();
 
@@ -429,9 +425,9 @@ void UKF::Update_x_P(VectorXd z, MatrixXd Zsig, int n_z){
   //update state mean and covariance matrix
   VectorXd z_diff = z - z_pred;
 
-  x_ = x_ + 1.15 * K * z_diff;
+  x_ = x_ + K * z_diff;
 
-  P_ = P_ - 1.15 *  K * S * K.transpose();
+  P_ = P_ - K * S * K.transpose();
 
   if (n_z == 3) {// Radar
 	   NIS_radar_ = z_diff.transpose() * S.inverse() * z_diff;
