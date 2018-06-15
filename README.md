@@ -57,6 +57,8 @@ These files were modified compared to the [original repository](https://github.c
 * src/ukf.h
 * src/tools.cpp
 
+An output data file``data_out.txt``  will be created in ``./build``, which consists of ``'px_meas','py_meas','NIS_radar', 'NIS_laser', 'px', 'py'``.
+
 There is also a python routine ([UKF_Visualizer.ipynb](./UKF_Visualizer.ipynb)) implemented to show measured and predicted points, as well as NIST values to tune the process noise ``std_a`` and ``std_yawdd``. These were tuned to ``std_a = 1`` and ``std_yawdd = 0.3``.
 
 **Not so good NIST values:**
