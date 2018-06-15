@@ -31,7 +31,7 @@ For instructions on how to install these components on different operating syste
 ## Setup and Running
 These are the suggested steps for Windows setup:
 
-* Follow these the [instructions](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/) for setting up Ubuntu BASH.
+* Follow these [instructions](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/) for setting up Ubuntu BASH.
 * Download Windows simulator [here](https://github.com/udacity/self-driving-car-sim/releases).
 * Open Ubuntu Bash (write following commands to Ubuntu Bash command window)
 * ``sudo apt-get update``
@@ -57,7 +57,7 @@ These files were modified compared to the [original repository](https://github.c
 * src/ukf.h
 * src/tools.cpp
 
-There is also a [python routine](./UKF_Visualizer.ipynb) implemented to show measured and predicted points, as well as NIST values to tune the process noise ``std_a`` and ``std_yawdd``. These were tuned to ``std_a = 1.75`` and ``std_yawdd = 0.6``.
+There is also a [python routine](./UKF_Visualizer.ipynb) implemented to show measured and predicted points, as well as NIST values to tune the process noise ``std_a`` and ``std_yawdd``. These were tuned to ``std_a = 1`` and ``std_yawdd = 0.3``.
 
 **Not so good NIST values:**
 ![img3]
