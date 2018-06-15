@@ -74,7 +74,7 @@ There is also a python routine ([UKF_Visualizer.ipynb](./UKF_Visualizer.ipynb)) 
 * Dataset 1 RMSE :
   * [0.0733, 0.0811, 0.1768, 0.1665] with initializing ``x_(2) = 5;``
     * doesn't work if you start in a different direction; dataset 2: ``x_(2)`` would have to be ``-5``
-  * [0.0733, 0.0811, 0.1768, 0.1665] with initializing ``if(radar)  {x_(2) = sqrt(vx * vx + vy * vy);}``
+  * [0.0733, 0.0811, 0.1768, 0.1665] with initializing ``if(radar)  {x_(2) = sqrt(vx * vx + vy * vy);} else{x_(2) = 0;}``(pseudo-code)
     * does work in all directions, so dataset 2 is possible
 
 
