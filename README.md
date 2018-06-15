@@ -59,7 +59,7 @@ These files were modified compared to the [original repository](https://github.c
 
 An output data file``data_out.txt``  will be created in ``./build``, which consists of ``'px_meas','py_meas','NIS_radar', 'NIS_laser', 'px', 'py'``.
 
-There is also a python routine ([UKF_Visualizer.ipynb](./UKF_Visualizer.ipynb)) implemented to show measured and predicted points, as well as NIST values to tune the process noise ``std_a`` and ``std_yawdd``. These were tuned to ``std_a = 1`` and ``std_yawdd = 0.3``.
+There is also a python routine ([UKF_Visualizer.ipynb](./UKF_Visualizer.ipynb)) implemented to show measured and predicted points, as well as NIST values to tune the process noise ``std_a`` and ``std_yawdd``. These were tuned to ``std_a = 0.75`` and ``std_yawdd = 0.3``.
 
 **Not so good NIST values:**
 ![img3]
@@ -76,7 +76,7 @@ There is also a python routine ([UKF_Visualizer.ipynb](./UKF_Visualizer.ipynb)) 
 * Dataset 1 RMSE :
   * [0.0733, 0.0811, 0.1768, 0.1665] with initializing ``x_(2) = 5;``
     * doesn't work if you start in a different direction; dataset 2: ``x_(2)`` would have to be ``-5``
-  * [0.0700, 0.0833, 0.3406, 0.2271] with initializing ``if(radar)  {x_(2) = sqrt(vx * vx + vy * vy);} else{x_(2) = 0;}``(pseudo-code)
+  * [0.0681, 0.0838, 0.3388, 0.2246] with initializing ``if(radar)  {x_(2) = sqrt(vx * vx + vy * vy);} else{x_(2) = 0;}``(pseudo-code)
     * does work in all directions, so dataset 2 is possible
 
 
