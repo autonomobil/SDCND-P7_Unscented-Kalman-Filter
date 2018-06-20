@@ -8,6 +8,7 @@
 ---
 # SDCND Term 2 Project 7: Unscented Kalman Filter
 ## Project for Udacity Self-Driving Car Engineer Nanodegree Program
+[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
 In this project we will utilize a Unscented Kalman Filter [UKF] to estimate the state of a moving object of interest with noisy lidar and radar measurements. It's similiar to the project ["Extended Kalman Filter"](https://github.com/autonomobil/SDCND-P6_Extended-Kalman-Filter)
 
