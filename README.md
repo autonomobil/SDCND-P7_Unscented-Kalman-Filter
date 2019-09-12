@@ -90,18 +90,18 @@ There is also a python routine ([UKF_Visualizer.ipynb](./UKF_Visualizer.ipynb)) 
 
 
 #### Your Sensor Fusion algorithm follows the general processing flow as taught in the preceding lessons
-* Sensor Fusion  @ [./src/ukd.cpp](./src/ukd.cpp)
-* [./src/ukd.cpp](./src/ukd.cpp) uses functions``Prediction``, ``UpdateLidar``, ``UpdateRadar`` and ``Update_x_P``
+* Sensor Fusion  @ [./src/ukf.cpp](./src/ukf.cpp)
+* [./src/ukf.cpp](./src/ukf.cpp) uses functions``Prediction``, ``UpdateLidar``, ``UpdateRadar`` and ``Update_x_P``
 
 
 #### Your Kalman Filter algorithm handles the first measurements appropriately
-* First measurement and initialization of x and P is handled in lines 100 - 151 [./src/ukd.cpp](./src/ukd.cpp)
+* First measurement and initialization of x and P is handled in lines 100 - 151 [./src/ukf.cpp](./src/ukf.cpp)
 
 
 #### Your Kalman Filter algorithm first predicts then updates
-* Prediction function: Lines 202 -287 [./src/ukd.cpp](./src/ukd.cpp); function `Prediction`
-* Update functions: Lines 307 - 440 [./src/ukd.cpp](./src/ukd.cpp);
+* Prediction function: Lines 202 -287 [./src/ukf.cpp](./src/ukf.cpp); function `Prediction`
+* Update functions: Lines 307 - 440 [./src/ukf.cpp](./src/ukf.cpp);
 functions ``UpdateLidar``, ``UpdateRadar`` and ``Update_x_P``
 
 #### Your Kalman Filter can handle radar and lidar measurements
-* In [./src/ukd.cpp](./src/ukd.cpp) if-statements decide how to initialize and process the data given the sensor type
+* In [./src/ukf.cpp](./src/ukf.cpp) if-statements decide how to initialize and process the data given the sensor type
